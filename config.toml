@@ -1,4 +1,63 @@
-baseURL = "https://example.org/"
+baseURL = "https://dbanalytics.co"
 languageCode = "en-us"
-title = "My New Hugo Site"
-theme = "ananke"
+defaultContentLanguage = "en"
+title = "DBAnalytics"
+theme = "hermit"
+# enableGitInfo = true
+pygmentsCodefences  = true
+pygmentsUseClasses  = true
+hasCJKLanguage = true  # If there're Chinese/Japanese/Korean Languages in the content, enable this.
+rssLimit = 10  # Maximum number of items in the RSS feed.
+copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License." # This message is only used by the RSS template.
+enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/functions/emojify/
+# googleAnalytics = "UA-123-45"
+# disqusShortname = "yourdiscussshortname"
+
+[author]
+  name = "Dylan Baker"
+
+[blackfriday]
+  hrefTargetBlank = true
+
+[taxonomies]
+  tag = "tags"
+  category = ""  # Categories are disabled by default.
+
+[params]
+  dateform        = "Jan 2, 2006"
+  dateformShort   = "Jan 2"
+  dateformNum     = "2006-01-02"
+  dateformNumTime = "2006-01-02 15:04 -0700"
+
+  themeColor = "#c0c8d6"  # Theme color in meta tags.
+  homeSubtitle = "Analytics to Help Your Business Scale."
+  footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
+  # gitUrl = "https://github.com/Someone/SomeRepo/commit/" # Prefix of link to the git commit detail page. GitInfo must be enabled.
+  justifyContent = false  # Set "text-align: justify" to .content, requires extended version of Hugo
+  # bgImg = ""  #  Homepage background-image URL
+
+  # Social Icons
+
+  [[params.social]]
+    name="linkedin"
+    url = "https://linkedin.com/in/dylangbaker"
+
+  [[params.social]]
+    name = "twitter"
+    url = "https://twitter.com/dylanbakercfm"
+
+  [[params.social]]
+    name = "github"
+    url = "https://github.com/DylanBaker"
+
+# [menu]
+# 
+#   [[menu.main]]
+#     name = "Blogs"
+#     url = "/posts/"
+#     weight = 10
+# 
+#   [[menu.main]]
+#     name = "Services"
+#     url = "/services/"
+#     weight = 1
