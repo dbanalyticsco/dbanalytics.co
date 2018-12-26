@@ -102,8 +102,29 @@ When you run `dbt test`, you'd realise your mistake and fix it before your Head 
 
 ## PDT table names
 
+David from your data science team wants to build a fancy model, predicting how many flying mattresses you'll sell next week. To do so, he wants to use the `customer_status` dimension defined in your `customers` view in Looker. He doesn't want to have re-define it in his work. He understandably thinks you should all be using the same definition. 
+
+He jumps into his database explorer to find the name of the PDT in the `looker_scratch` schema, the location all the PDTs are built. He finds it. The table is called `lr$zzzxu3bfa1lkc2x5ne75_customers`. He goes off and builds his model. It has an AUC score of 0.96. He's incredibly pleased. He shares the analysis. 
+
+Your COO opens it up, tries to run it. To his (and David's) dismay, the following error occurs: `ERROR: relation "looker_scratch.lr$zzzxu3bfa1lkc2x5ne75_customers" does not exist`. The table doesn't exist anymore. 
+
+Every time you make a change to the SQL in a PDT, Looker will rename the underlying table in your database. As is the case here, Looker is often not the only platform or location where data analysis will be produced in your business. Often you'll have a data science function. Often you'll have people who need to write ad-hoc sql queries for specific pieces of analysis. As David initially asserted, all those functions should be building off the same models and the same definitions, building off the same single source of truth. 
+
+The way Looker builds its PDTs isn't conducive to that principal. The table names will continue to change (and aren't memorable for analysts to use in ad-hoc querying). 
+
+dbt will build your `customers` model in a table called `customers`. That will never change unless you tell it to. It can be consumed by every user and every platform in perpetuity. David can use it for his analysis. He could even put that model into production because he can be confident that your analytics team controls if that table exists or doesn't.
+
+## Moving away from Looker (god forbid)
+
+That leads me to a slightly meta point.
 
 ## DRY code
+
+
+
+
+
+## When PDTs are best
 
 
 
