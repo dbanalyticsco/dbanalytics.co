@@ -116,9 +116,56 @@ dbt will build your `customers` model in a table called `customers`. That will n
 
 ## Moving away from Looker (god forbid)
 
-That leads me to a slightly meta point.
+That leads me to a slightly meta point. 
+
+Looker is great. I love Looker. I wholly endorse Looker. I don't see that changing any time soon. 
+
+That said, eventually, you or I may choose to move to a different BI platform. It may no longer be the tool best suited for what you are trying to achieve.
+
+At that point, given that the underlying data models need to be used by other users and platforms, you're going to need to retain those models somewhere. Might I suggest dbt?
+
+![dbt business intelligence stack!](/dbt-stack-diagram.png)
 
 ## DRY code
+
+SQL is a notoriously WET (write every time) language. It's veritably soaking with repetition. 
+
+Need to pivot out a column into 5 columns? 5 lines of SQL.
+
+Need to group by 76 columns? (Not sure why.) You need to write out every number between 1 and 76. 
+
+Need to calculate the time between two dates, subtracting for weekends in between? The same lovely SQL snippet over and over and over.
+
+Most people's SQL is rife with repetition. Most people's SQL is rife with repetition. 
+
+This isn't a Looker problem. But it is a problem that frequently presents itself in PDT modelling. dbt's Jinja-powered 'macros' lets you write far more DRY (don't repeat yourself) code. It allows for more manageable, scalable SQL queries that your analysts will be happy to manage.
+
+Want to pivot that `colour` column? Initially, you might have written something like this:
+
+{{< highlight sql >}}
+
+select
+	id,
+	sum(case when colour = 'Red' then amount end) as pivot_red,
+	sum(case when colour = 'Yellow' then amount end) as pivot_yellow,
+	sum(case when colour = 'Green' then amount end) as pivot_green
+from colour_table
+group by 1
+
+{{< /highlight >}}
+
+Instead, you can write a small macro and generate SQL as follows:
+
+{{< highlight sql >}}
+
+select
+	id,
+	{{ pivot('colour', ['Red','Yellow','Green']) }}
+from colour_table
+group by 1
+
+{{< /highlight >}}
+
 
 
 
