@@ -6,20 +6,19 @@ author: "Dylan Baker"
 
 Over the past few years, Looker has become a market-leading BI tool. Its data governance and self-service capabilities have now become paramount to thousands of BI stacks. For many, the Third Wave of BI (TM Frank Bien) is well and truly here.
 
-Persistent derived tables (PDTs) are a big part of Looker's success. They allow businesses to quickly transform their data with simple SQL `select` statement, abstracting lots of the data engineering that might otherwise be required. They allow you to easily materialize those models as tables in your data warehouse, speeding up the query times for your end users. 
+Persistent derived tables (PDTs) are a big part of Looker's success. They allow businesses to quickly transform their data with simple SQL `select` statements, abstracting lots of the data engineering that might otherwise be required. They allow you to easily materialize those models as tables in your data warehouse, speeding up the query times for your end users. 
 
-They are addictive. Build a few PDTs, define an explore. Push. Build a few more. Push. Re-define the calculation behind a dimension. Push. Like most addictions though, there comes a point where you realise it may be detrimental to your health and well-being. Well, that of your BI stack anyway. 
+They are addictive. Build a few PDTs, define an explore. Push to production. Build a few more. Push. Re-define the calculation behind a dimension. Push. Like most addictions though, there comes a point where you realise it may be detrimental to your health and well-being. Well, that of your BI stack anyway. 
 
-Models can start getting slow, without the ability to optimise fully. Models can get repetitive, with very portions of code written out over and over. Models can break, without the ability to test their output.
+Models can start getting slow, without the ability to optimise fully. Models can get repetitive, with large portions of code written out over and over. Models can break, without the ability to test their output.
 
 ## Enter: dbt.
 
-dbt is to PDTs what Reeses is to peanut butter slathered on store-brand chocolate: broadly the same thing, but one far better executed that the other.
+dbt is to PDTs what good sourdough with cultured butter is to white sandwich bread with margarine: broadly the same thing, but one far better executed that the other.
 
-From Tristan Handy, the CEO and founder of Fishtown Analytics who build dbt:
+As Tristan Handy, founder of dbt-building Fishtown Analytics, [explains](https://blog.fishtownanalytics.com/what-exactly-is-dbt-47ba57309068):
 
-> dbt is the T in ELT. It doesn’t extract or load data, but it’s extremely good at transforming data that’s already loaded into your warehouse. This “transform after load” architecture is becoming known as ELT (extract, load, transform).
-> Every model is exactly one SELECT query, and this query defines the resulting data set.
+> dbt is the T in ELT (extract, load, transform). It doesn’t extract or load data, but it’s extremely good at transforming data that’s already loaded into your warehouse. Every model is exactly one SELECT query, and this query defines the resulting data set.
 
 Sounds pretty similar, right? It is. dbt simply allows you to abide by certain principals that PDTs don't. dbt allows you some flexibity that PDTs don't.
 
@@ -41,13 +40,13 @@ Incredibly often, the issue that brings people from PDTs to dbt is the performan
 
 The **first** is in inability to [build PDTs incrementally](https://discourse.looker.com/t/incremental-pdts/7620). 
 
-Imagine you've recently set up Heap, Segment, Snowplow or some other solution for event tracking. Initially, you've only got a few days of data, then a few weeks, then a few months. Every time your PDT needs to rebuild, it rebuilds the _whole_ data set. You're data from day 1 hasn't changed, but it has to be included in the data that gets refreshed. Gradually, this causes the model to rebuild more and more slowly, frustrating your end users who just want to know how many times people viewed the product page for your new special flying mattress yesterday.
+Imagine you've recently set up Heap, Segment, Snowplow or some other solution for event tracking. Initially, you've only got a few days of data, then a few weeks, then a few months. Every time your PDT needs to rebuild, it rebuilds the _whole_ data set. Your data from day one hasn't changed, but it has to be included in the data that gets refreshed. Gradually, this causes the model to rebuild more and more slowly, frustrating your end users who just want to know how many times people viewed the product page for your new special flying mattress yesterday.
 
 With dbt, you can build models incrementally, only building or rebuilding the rows that have been created or changed since you last ran the model. This can substantially speed up the build of your models. It will also greatly reduce the load on your database when the models build, allowing other queries to be served more quickly. 
 
 The **second** problem is a tendency to never build intermediary PDTs to speed up model builds.
 
-There is a tendency in Looker to only build views (and therefore PDTs) that are necessary as a component of an explore. Often though, it would be beneficial for the speed of your rebuilds to break one long model into a handful of tables and then reference those in a final query. `base_pdt` -> `intermediary_pdt` -> `final_pdt` can often be quicker than if all the logic exists in one final larger table. It's not that this can't be done in Looker - it's just that it feel wrong to generate all those views in Looker if they aren't directly for analytics purposes	. 
+There is a tendency in Looker to only build views (and therefore PDTs) that are necessary as a component of an explore. Often though, it would be beneficial for the speed of your rebuilds to break one long model into a handful of tables and then reference those in a final query. `base_pdt` -> `intermediary_pdt` -> `final_pdt` can often be quicker than having all the logic in one final larger query. It's not that this can't be done in Looker - it's just that it feel wrong to generate all those views in Looker if they aren't being surfaced to your end users. 
 
 The workflow described above is common place in dbt. Ultimately, it creates a separation between the preparation of data and the LookML that instructs Looker how to expose your final modelled output. 
 
@@ -70,7 +69,7 @@ from salesforce.sf_account a
 
 Everything is working correctly. You're completely confident in the data generated in your reports.
 
-Then, you decide you want to add the stage name from the related Salesforce opportunities to the model. Absent-mindedly, you forget that Accounts -> Opportunities is a one-to-many relationship. You make the following change and all your data from the `sf_account` view is suddently fanned out, distorting metrics in all your reports. 
+Then, you decide you want to add the stage name from the related Salesforce opportunities to the model. Absent-mindedly, you forget that Accounts -> Opportunities is a one-to-many relationship. You make the following change and all your data from the `sf_account` view is suddenly fanned out, distorting metrics in all your reports. 
 
 {{< highlight sql >}}
 
@@ -83,9 +82,9 @@ left join salesforce.sf_opportunity o
 
 {{< /highlight >}}
 
-The ID column was supposed to be your unique primary key and now it isn't. There is currently no automated mechanism in Looker to test the output of that query. No way of knowing that a record for ID `176` is now there 5 times, one for each opportunity generated for that account.
+The ID column was supposed to be your unique primary key and now it isn't. There is currently no automated mechanism in Looker to test the output of that query. No way of knowing that a record for ID `176` now has five records, one for each opportunity generated for that account.
 
-In dbt, you can define constraints on the model, giving you the ability to identify instances like these in your development workflow.
+In dbt, you can define assumptions on the model, giving you the ability to identify instances like these in your development workflow.
 
 {{< highlight yaml >}}
 
@@ -98,23 +97,25 @@ In dbt, you can define constraints on the model, giving you the ability to ident
 
 {{< /highlight >}}
 
-When you run `dbt test`, you'd realise your mistake and fix it before your Head of Sales starts shouting at you because all the numbers changed. Though testing of that sort hasn't always been common-place in analytics, it's incredibly important so that everyone can have confidence in the reporting they consume.
+When you run `dbt test`, you'd realise your mistake and fix it before your Head of Sales starts shouting at you because all the numbers changed. Though testing of that sort hasn't always been commonplace in analytics, it's incredibly important so that everyone can have confidence in the reporting they consume.
 
-## PDT table names
+## Making data usage-agnostic
 
-David from your data science team wants to build a fancy model, predicting how many flying mattresses you'll sell next week. To do so, he wants to use the `customer_status` dimension defined in your `customers` view in Looker. He doesn't want to have re-define it in his work. He understandably thinks you should all be using the same definition. 
+Claire from your data science team wants to build a fancy model, predicting how many flying mattresses you'll sell next week. To do so, he wants to use the `customer_status` dimension defined in your `customers` view in Looker. He doesn't want to have re-define it in his work. He understandably thinks you should all be using the same definition. 
 
 He jumps into his database explorer to find the name of the PDT in the `looker_scratch` schema, the location all the PDTs are built. He finds it. The table is called `lr$zzzxu3bfa1lkc2x5ne75_customers`. He goes off and builds his model. It has an AUC score of 0.96. He's incredibly pleased. He shares the analysis. 
 
-Your COO opens it up, tries to run it. To his (and David's) dismay, the following error occurs: `ERROR: relation "looker_scratch.lr$zzzxu3bfa1lkc2x5ne75_customers" does not exist`. The table doesn't exist anymore. 
+Your COO opens it up, tries to run it. To his (and Claire's) dismay, the following error occurs: `ERROR: relation "looker_scratch.lr$zzzxu3bfa1lkc2x5ne75_customers" does not exist`. The table doesn't exist anymore. 
 
-Every time you make a change to the SQL in a PDT, Looker will rename the underlying table in your database. As is the case here, Looker is often not the only platform or location where data analysis will be produced in your business. Often you'll have a data science function. Often you'll have people who need to write ad-hoc sql queries for specific pieces of analysis. As David initially asserted, all those functions should be building off the same models and the same definitions, building off the same single source of truth. 
+Every time you make a change to the SQL in a PDT, Looker will rename the underlying table in your database. As is the case here, Looker is often not the only platform or location where data analysis will be produced in your business. Often you'll have a data science function. Often you'll have people who need to write ad-hoc sql queries for specific pieces of analysis. As Claire initially asserted, all those functions should be building off the same models and the same definitions, building off the same single source of truth. 
 
-The way Looker builds its PDTs isn't conducive to that principal. The table names will continue to change (and aren't memorable for analysts to use in ad-hoc querying). 
+The way Looker builds its PDTs isn't conducive to that principal. The table names will continue to change (and aren't memorable for analysts to use in ad-hoc querying).
 
-dbt will build your `customers` model in a table called `customers`. That will never change unless you tell it to. It can be consumed by every user and every platform in perpetuity. David can use it for his analysis. He could even put that model into production because he can be confident that your analytics team controls if that table exists or doesn't.
+dbt will build your `customers` model in a table called `customers` in the schema of your choice (`target` in dbt parlance). That will never change unless you tell it to. It can be consumed by every user and every platform in perpetuity. David can use it for his analysis. He could even put that model into production because he can be confident that your analytics team controls if that table exists or doesn't.
 
-## Moving away from Looker (god forbid)
+One way around this with Looker is having people build models on top of the Looker API. This can work well, but still requires the data being exposed together in an explore. With external models, people can join up datasets that aren't otherwise modelled together in Looker.
+
+## Moving away from looker
 
 That leads me to a slightly meta point. 
 
