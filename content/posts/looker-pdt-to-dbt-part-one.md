@@ -47,11 +47,17 @@ With dbt, you can build models incrementally, only building or rebuilding the ro
 
 The **second** problem is a tendency to never build intermediary PDTs to speed up model builds.
 
-There is a tendency in Looker to only build views (and therefore PDTs) that are necessary as a component of an explore. Often though, it would be beneficial for the speed of your rebuilds to break one long model into a handful of tables and then reference those in a final query. `base_pdt` -> `intermediary_pdt` -> `final_pdt` can often be quicker than if all the logic exists in one final larger table. It's not that this can't be done in Looker - it's just that it feel wrong to generate all those views in Looker if they aren't directly for analytics purposes. 
+There is a tendency in Looker to only build views (and therefore PDTs) that are necessary as a component of an explore. Often though, it would be beneficial for the speed of your rebuilds to break one long model into a handful of tables and then reference those in a final query. `base_pdt` -> `intermediary_pdt` -> `final_pdt` can often be quicker than if all the logic exists in one final larger table. It's not that this can't be done in Looker - it's just that it feel wrong to generate all those views in Looker if they aren't directly for analytics purposes	. 
 
 The workflow described above is common place in dbt. Ultimately, it creates a separation between the preparation of data and the LookML that instructs Looker how to expose your final modelled output. 
 
 ## Testing your models
+
+Another feature that dbt brings to the table is model testing, similar to unit tests present in most software development languages. 
+
+Looker's data governance capabilities are fantastic. They ensure that everyone is looking at the same data - the same metrics. However, it doesn't ensure that the data feeding those metrics is correct. If someone makes a mistake in the SQL, everyone is still looking at the same metric, that metric just isn't accurate anymore. 
+
+Imagine the following situation. You use Salesforce as your CRM and you have a LookML view called `sf_account`:
 
 {{< highlight sql >}}
 
@@ -62,7 +68,42 @@ from salesforce.sf_account a
 
 {{< /highlight >}}
 
+Everything is working correctly. You're completely confident in the data generated in your reports.
 
+Then, you decide you want to add the stage name from the related Salesforce opportunities to the model. Absent-mindedly, you forget that Accounts -> Opportunities is a one-to-many relationship. You make the following change and all your data from the `sf_account` view is suddently fanned out, distorting metrics in all your reports. 
+
+{{< highlight sql >}}
+
+select 
+	a.id,
+	a.name
+from salesforce.sf_account a
+left join salesforce.sf_opportunity o
+	on o.accountid = a.id
+
+{{< /highlight >}}
+
+The ID column was supposed to be your unique primary key and now it isn't. There is currently no automated mechanism in Looker to test the output of that query. No way of knowing that a record for ID `176` is now there 5 times, one for each opportunity generated for that account.
+
+In dbt, you can define constraints on the model, giving you the ability to identify instances like these in your development workflow.
+
+{{< highlight yaml >}}
+
+- name: sf_account
+  columns:
+    - name: id
+      tests:
+        - not_null
+        - unique
+
+{{< /highlight >}}
+
+When you run `dbt test`, you'd realise your mistake and fix it before your Head of Sales starts shouting at you because all the numbers changed. Though testing of that sort hasn't always been common-place in analytics, it's incredibly important so that everyone can have confidence in the reporting they consume.
+
+## PDT table names
+
+
+## DRY code
 
 
 
