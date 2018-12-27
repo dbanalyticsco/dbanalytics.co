@@ -101,9 +101,9 @@ When you run `dbt test`, you'd realise your mistake and fix it before your Head 
 
 ## Making data usage-agnostic
 
-Claire from your data science team wants to build a fancy model, predicting how many flying mattresses you'll sell next week. To do so, he wants to use the `customer_status` dimension defined in your `customers` view in Looker. He doesn't want to have re-define it in his work. He understandably thinks you should all be using the same definition. 
+Claire from your data science team wants to build a fancy model, predicting how many flying mattresses you'll sell next week. To do so, she wants to use the `customer_status` dimension defined in your `customers` view in Looker. She doesn't want to have re-define it in her work. She understandably thinks you should all be using the same definition. 
 
-He jumps into his database explorer to find the name of the PDT in the `looker_scratch` schema, the location all the PDTs are built. He finds it. The table is called `lr$zzzxu3bfa1lkc2x5ne75_customers`. He goes off and builds his model. It has an AUC score of 0.96. He's incredibly pleased. He shares the analysis. 
+She jumps into her database explorer to find the name of the PDT in the `looker_scratch` schema, the location all the PDTs are built. She finds it. The table is called `lr$zzzxu3bfa1lkc2x5ne75_customers`. She goes off and builds his model. It has an AUC score of 0.96. She's incredibly pleased. She shares the analysis. 
 
 Your COO opens it up, tries to run it. To his (and Claire's) dismay, the following error occurs: `ERROR: relation "looker_scratch.lr$zzzxu3bfa1lkc2x5ne75_customers" does not exist`. The table doesn't exist anymore. 
 
@@ -111,7 +111,7 @@ Every time you make a change to the SQL in a PDT, Looker will rename the underly
 
 The way Looker builds its PDTs isn't conducive to that principal. The table names will continue to change (and aren't memorable for analysts to use in ad-hoc querying).
 
-dbt will build your `customers` model in a table called `customers` in the schema of your choice (`target` in dbt parlance). That will never change unless you tell it to. It can be consumed by every user and every platform in perpetuity. David can use it for his analysis. He could even put that model into production because he can be confident that your analytics team controls if that table exists or doesn't.
+dbt will build your `customers` model in a table called `customers` in the schema of your choice (`target` in dbt parlance). That will never change unless you tell it to. It can be consumed by every user and every platform in perpetuity. Claire can use it for her analysis. She could even put that model into production because she can be confident that your analytics team controls if that table exists or doesn't.
 
 One way around this with Looker is having people build models on top of the Looker API. This can work well, but still requires the data being exposed together in an explore. With external models, people can join up datasets that aren't otherwise modelled together in Looker.
 
@@ -167,12 +167,15 @@ group by 1
 
 {{< /highlight >}}
 
-
-
-
-
+Now, when you need to change how the logic of your 'pivots' work, possibly now present in many files, you only have to change it in the one location you've defined the macro. 
 
 ## When PDTs are best
+
+So, I lied a little. There aren't many situations where **Persistent** Derived Tables are necessary, in my opinion. There *are* many reasons why (non-persisted, vanilla) Derived Tables (DTs) are necessary. DTs practically function in a very similar way to PDTs, they just don't get materialised in the database.
+
+DTs are necessary when your query requires user input. They are necessary when you have window functions that
+
+
 
 
 
