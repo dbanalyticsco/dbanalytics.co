@@ -115,7 +115,7 @@ dbt will build your `customers` model in a table called `customers` in the schem
 
 One way around this with Looker is having people build models on top of the Looker API. This can work well, but still requires the data being exposed together in an explore. With external models, people can join up datasets that aren't otherwise modelled together in Looker.
 
-## Moving away from looker
+ ## Moving away from Looker
 
 That leads me to a slightly meta point. 
 
