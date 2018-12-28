@@ -46,7 +46,7 @@ With dbt, you can build models incrementally, only building or rebuilding the ro
 
 The **second** problem is a tendency to never build intermediary PDTs to speed up model builds.
 
-There is a tendency in Looker to only build views (and therefore PDTs) that are necessary as a component of an explore. Often though, it would be beneficial for the speed of your rebuilds to break one long model into a handful of tables and then reference those in a final query. `base_pdt` -> `intermediary_pdt` -> `final_pdt` can often be quicker than having all the logic in one final larger query. It's not that this can't be done in Looker - it's just that it feel wrong to generate all those views in Looker if they aren't being surfaced to your end users. 
+ There is a tendency in Looker to only build views (and therefore PDTs) that are necessary as a component of an explore. Often though, it would be beneficial for the speed of your rebuilds to break one long model into a handful of tables and then reference those in a final query. `base_pdt` -> `intermediary_pdt` -> `final_pdt` can often be quicker than having all the logic in one final larger query. It's not that this can't be done in Looker - it's just that it feels wrong to generate all those views in Looker if they aren't being surfaced to your end users. 
 
 The workflow described above is common place in dbt. Ultimately, it creates a separation between the preparation of data and the LookML that instructs Looker how to expose your final modelled output. 
 
