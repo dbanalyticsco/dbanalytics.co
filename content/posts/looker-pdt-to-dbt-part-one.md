@@ -38,7 +38,7 @@ So, with that said, here are the instances where I would recommend a move to dbt
 
 Incredibly often, the issue that brings people from PDTs to dbt is the performance of their models. Most of the time, this stems from one of two problems.
 
-The **first** is in inability to [build PDTs incrementally](https://discourse.looker.com/t/incremental-pdts/7620). 
+The **first** is an inability to [build PDTs incrementally](https://discourse.looker.com/t/incremental-pdts/7620). 
 
  Imagine you've recently set up Heap, Segment, Snowplow or some other solution for event tracking. You build a PDT that turns these events into page views. Initially, you've only got a few days of data, then a few weeks, then a few months. Every time your PDT needs to rebuild, it rebuilds the _whole_ data set. Your data from day one hasn't changed, but it has to be included in the data that gets refreshed. Gradually, this causes the model to rebuild more and more slowly, frustrating your end users who just want to know how many times people viewed the product page for your new special flying mattress yesterday.
 
