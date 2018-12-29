@@ -6,7 +6,7 @@ author: "Dylan Baker"
 
 Over the past few years, Looker has become a market-leading BI tool. Its data governance and self-service capabilities have now become paramount to thousands of BI stacks. For many, the Third Wave of BI (TM Frank Bien) is well and truly here.
 
-Persistent derived tables (PDTs) are a big part of Looker's success. They allow businesses to quickly transform their data with simple SQL `select` statements, abstracting lots of the data engineering that might otherwise be required. They allow you to easily materialize those models as tables in your data warehouse, speeding up the query times for your end users. 
+[Persistent derived tables (PDTs)](https://docs.looker.com/data-modeling/learning-lookml/derived-tables) are a big part of Looker's success. They allow businesses to quickly transform their data with simple SQL `select` statements, abstracting lots of the data engineering that might otherwise be required. They allow you to easily materialize those models as tables in your data warehouse, speeding up the query times for your end users. 
 
 They are addictive. Build a few PDTs, define an explore. Push to production. Build a few more. Push. Re-define the calculation behind a dimension. Push. Like most addictions though, there comes a point where you realise it may be detrimental to your health and well-being. Well, that of your BI stack anyway. 
 
@@ -75,7 +75,8 @@ Then, you decide you want to add the stage name from the related Salesforce oppo
 
 select 
 	a.id,
-	a.name
+	a.name,
+	o.stagename
 from salesforce.sf_account a
 left join salesforce.sf_opportunity o
 	on o.accountid = a.id
@@ -97,7 +98,7 @@ In dbt, you can define assumptions on the model, giving you the ability to ident
 
 {{< /highlight >}}
 
-When you run `dbt test`, you'd realise your mistake and fix it before your Head of Sales starts shouting at you because all the numbers changed. Though testing of that sort hasn't always been commonplace in analytics, it's incredibly important so that everyone can have confidence in the reporting they consume.
+When you run `dbt test`, you'd realise your mistake and fix it before your Head of Sales starts shouting at you because all the numbers changed. Though testing of that sort hasn't always been commonplace in analytics, it's incredibly important so that everyone can have confidence in the reporting they consume, particularly when that reporting is self-serve.
 
 ## Making data usage-agnostic
 
@@ -115,7 +116,7 @@ dbt will build your `customers` model in a table called `customers` in the schem
 
 One way around this with Looker is having people build models on top of the Looker API. This can work well, but still requires the data being exposed together in an explore. With external models, people can join up datasets that aren't otherwise modelled together in Looker.
 
- ## Moving away from Looker
+## Moving away from Looker
 
 That leads me to a slightly meta point. 
 
@@ -171,18 +172,35 @@ Now, when you need to change how the logic of your 'pivots' work, possibly now p
 
 ## When PDTs are best
 
-So, I lied a little. There aren't many situations where **Persistent** Derived Tables are necessary, in my opinion. There *are* many reasons why (non-persisted, vanilla) Derived Tables (DTs) are necessary. DTs practically function in a very similar way to PDTs, they just don't get materialised in the database.
+There aren't many situations where **Persistent** Derived Tables are necessary over dbt models. However, there *are* many reasons why non-persisted, vanilla Derived Tables (DTs) are necessary. DTs practically function in a very similar way to PDTs, they just don't get materialised in the database.
 
-DTs are necessary when your query requires user input. They are necessary when you have window functions that
+DTs are necessary when your query requires user input. Have a window function that you want to calculate dynamically? You'll need a Derived Table. 
 
+DTs should be used when you want to extend an underlying model. Have a `opportunities` table that you need to turn into `live_opportunities` and `lost_opportunities`? You should used a Derived Table to filter the original `opportunities` table. You probably don't want to create each of those individual tables in your data warehouse.
 
+Ultimately though, if you are using dbt as well, your Derived Tables should build from dbt models, not the raw source tables. 
 
+And your LookML views will still need to exist. You'll still need to define how measures are created. You'll still need to define how you want to expose your data to your end-user. [Looking is vital for those steps](https://blog.fishtownanalytics.com/how-do-you-decide-what-to-model-in-dbt-vs-lookml-dca4c79e2304).
 
+## Arguments against dbt
 
+There are also reasons to not adopt dbt, distinct of Looker's functionality.
 
-A throwaway line I like but haven't fit anywhere:
+You would be adding another tool to your stack. That adds complexity and extra management responsibilities.
 
-dbt is [a hell of a drug](https://www.youtube.com/watch?v=udNHsk57f24), often discovered dbt through the powerful gateway drug of LookML persistent derived tables (PDTs).
+You would be adding another step to your development workflow. That requires a bit more work from analysts and engineers.
 
+dbt is a batch-based tool. You wouldn't be able to re-build tables off of custom triggers like you can with PDTs.
 
+All that said, I strongly believe the benefits dbt generates far outweigh the downsides. If you are using PDTs and starting to experience some of the pain-points outlined here, it is the ideal tool to add to your stack. 
+
+Moving from one to the other isn't a big leap. It's all still `select` statements, which in my opinion is the biggest draw to PDTs in the first place. Initially, all of your PDT SQL can be seamlessly picked up and dropped into a dbt project. I've seen migrations happen in days or weeks, depending on how much development you have already done in Looker. 
+
+You can also use both in tandem, slowly moving PDTs over to dbt models as you work. There's nothing stopping you from testing dbt out for a few models to ensure you're comfortable with it before making the final jump. 
+
+## Anything I've missed?
+
+If there's anything you feel I've missed, please feel free to message me via [email](mailto:dylan@dbanalytics.co), [Twitter](https://twitter.com/dylanbakercfm) or the [dbt Slack community](http://slack.getdbt.com/) (which I would highly recommend). 
+
+If you're interested in testing out dbt, the next post in this series is going to cover the practical steps necessary to migrate your PDTs. Sign up below to make sure you don't miss out.  
 
