@@ -10,8 +10,7 @@ hasCJKLanguage = true  # If there're Chinese/Japanese/Korean Languages in the co
 rssLimit = 10  # Maximum number of items in the RSS feed.
 copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License." # This message is only used by the RSS template.
 enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/functions/emojify/
-# googleAnalytics = "UA-123-45"
-# disqusShortname = "yourdiscussshortname"
+
 
 [author]
   name = "Dylan Baker"
@@ -30,7 +29,7 @@ enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/func
   dateformNumTime = "2006-01-02 15:04 -0700"
 
   themeColor = "#c0c8d6"  # Theme color in meta tags.
-  homeSubtitle = "Analytics to Help Your Business Scale."
+  homeSubtitle = "We provide consulting services to help you make the most of your data. Start today."
   footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
   # gitUrl = "https://github.com/Someone/SomeRepo/commit/" # Prefix of link to the git commit detail page. GitInfo must be enabled.
   justifyContent = false  # Set "text-align: justify" to .content, requires extended version of Hugo
@@ -50,7 +49,12 @@ enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/func
     name = "github"
     url = "https://github.com/DylanBaker"
 
-# [menu]
+[menu]
+
+  [[menu.main]]
+    name = "Contact"
+    url = "/contact/"
+    weight = 2
 # 
 #   [[menu.main]]
 #     name = "Blogs"
