@@ -28,8 +28,9 @@ enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/func
   dateformNum     = "2006-01-02"
   dateformNumTime = "2006-01-02 15:04 -0700"
 
-  themeColor = "#c0c8d6"  # Theme color in meta tags.
-  homeSubtitle = "👋 Freelance analytics consultant focused on helping high-growth businesses build scalable data reporting and infrastructure."
+  themeColor = "#7ec8f7"  # Theme color in meta tags.
+  homeSubtitle = "👋 I'm a freelance analytics consultant."
+  homeSubtitle2 = "I help businesses with reporting, infrastructure and culture to help them make better data-driven decisions."
   footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
   # gitUrl = "https://github.com/Someone/SomeRepo/commit/" # Prefix of link to the git commit detail page. GitInfo must be enabled.
   justifyContent = false  # Set "text-align: justify" to .content, requires extended version of Hugo
@@ -55,7 +56,17 @@ enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/func
     name = "Contact"
     url = "/contact/"
     weight = 2
-# 
+
+  [[menu.main]]
+    name = "Standing Offer"
+    url = "/standing-offer"
+    weight = 1.5
+
+  [[menu.main]]
+    name = "What I'm Reading"
+    url = "/what-im-reading"
+    weight = 1
+
 #   [[menu.main]]
 #     name = "Blogs"
 #     url = "/posts/"
