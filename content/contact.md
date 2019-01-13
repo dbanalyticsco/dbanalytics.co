@@ -4,7 +4,7 @@ title: "Get In Touch"
 
 Want to chat about business intelligence or analytics? I'd love to hear from you.
 
-You can fill out the form below or frequently (read: always) find me on [Twitter](https://www.twitter.com).
+You can fill out the form below or frequently (read: always) find me on [Twitter](https://twitter.com/DylanBakerCFM).
 
 <hr class="post-end">
 <div style="width: 600px; margin-top: 25px">
