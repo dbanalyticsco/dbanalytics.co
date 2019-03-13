@@ -1,6 +1,6 @@
 ---
 title: "Converting Looker PDTs to dbt models: Reasons why (and why not)"
-date: "2018-12-25"
+date: "2019-03-13"
 author: "Dylan Baker"
 ---
 
@@ -8,13 +8,13 @@ Over the past few years, Looker has become a market-leading BI tool. Its data go
 
 [Persistent derived tables (PDTs)](https://docs.looker.com/data-modeling/learning-lookml/derived-tables) are a big part of Looker's success. They allow businesses to quickly transform their data with simple SQL `select` statements, abstracting lots of the data engineering that might otherwise be required. They allow you to easily materialize those models as tables in your data warehouse, speeding up the query times for your end users. 
 
-They are addictive. Build a few PDTs, define an explore. Push to production. Build a few more. Push. Re-define the calculation behind a dimension. Push. Like most addictions though, there comes a point where you realise it may be detrimental to your health and well-being. Well, that of your BI stack anyway. 
+They are addictive. Build a few PDTs, define an explore. Push to production. Build a few more. Push. Re-define the calculation behind a dimension. Push. While derived tables are great for a number of use-cases (many of which I come on to later), there can come a point where their use can become problematic. 
 
 Models can start getting slow, without the ability to optimise fully. Models can get repetitive, with large portions of code written out over and over. Models can break, without the ability to test their output.
 
 ## Enter: dbt.
 
-dbt is to PDTs what good sourdough with cultured butter is to white sandwich bread with margarine: broadly the same thing, but one far better executed that the other.
+dbt is to PDTs what good sourdough with cultured butter is to white sandwich bread with margarine: broadly the same thing, but one somewhat more palatable than the other.
 
 As Tristan Handy, founder of dbt-building Fishtown Analytics, [explains](https://blog.fishtownanalytics.com/what-exactly-is-dbt-47ba57309068):
 
@@ -30,7 +30,7 @@ Before I go any further, I want to remark that I wholeheartedly believe that Loo
 
 It excels at data governance. It excels at self-service. It excels at integrating with other tools. It's just not the best tool for certain types of data modelling.
 
-It may also be right for your business's modelling _right now_. It's a great way to get started with data modelling if you've never done it before. It removes a few steps of complication that having another tool in the mix adds.
+It may also be right for your business's modelling _right now_. It's a great way to get started with data modelling if you've never done it before. It removes steps of complication that having another tool in the mix adds.
 
 So, with that said, here are the instances where I would recommend a move to dbt and the instances where Looker is going to better serve your needs.
 
@@ -203,4 +203,6 @@ You can also use both in tandem, slowly moving PDTs over to dbt models as you wo
 If there's anything you feel I've missed, please feel free to message me via [email](mailto:dylan@dbanalytics.co), [Twitter](https://twitter.com/dylanbakercfm) or the [dbt Slack community](http://slack.getdbt.com/) (which I would highly recommend). 
 
 If you're interested in testing out dbt, the next post in this series is going to cover the practical steps necessary to migrate your PDTs. Sign up below to make sure you don't miss out.  
+
+I'll be discussing this topic and data engineering more broadly at the [Looker NY meetup on March 14th](https://www.meetup.com/meetup-group-XwKEpidf/events/259141620/). Come join if you're in town! 
 
