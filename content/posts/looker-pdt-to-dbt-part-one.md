@@ -204,5 +204,5 @@ If there's anything you feel I've missed, please feel free to message me via [em
 
 If you're interested in testing out dbt, the next post in this series is going to cover the practical steps necessary to migrate your PDTs. Sign up below to make sure you don't miss out.  
 
-I'll be discussing this topic and data engineering more broadly at the [Looker NY meetup on March 14th](https://www.meetup.com/meetup-group-XwKEpidf/events/259141620/). Come join if you're in town! 
+I'll be discussing this topic and data engineering more broadly at the [Looker NY meetup on March 14th](https://www.meetup.com/meetup-group-XwKEpidf/events/259141620/). Come join if you're in town!
 
