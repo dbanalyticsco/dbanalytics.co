@@ -14,7 +14,7 @@ title = "Consulting Services"
 
 You need your data in one place. I help businesses set up robust, scalable data pipelines. 
 
-I can help choose and set up a data warehouse; I recommend [Snowflake](https://www.snowflake.com/) or [BigQuery](https://cloud.google.com/bigquery/). I can also set up the ETL pipelines to get your data into your warehouse in a timely manner. Most of the time. this involves using third-party tools, but I can also help when you need something a bit more specific to your use-case.
+I can help choose and set up a data warehouse; I recommend [Snowflake](https://www.snowflake.com/) or [BigQuery](https://cloud.google.com/bigquery/). I can also set up the ETL pipelines to get your data into your warehouse in a timely manner. Most of the time, this involves using third-party tools, but I can also help when you need something a bit more specific to your use-case.
 
 <img style="float: right; margin-left: 25px; margin-bottom: 10px; width: 100px; height: 100px" src="/white-flow.png">
 
@@ -30,7 +30,7 @@ Using tools like [dbt](https://www.getdbt.com/), we'll transform the raw data fr
 
 Ensuring that you're tracking the right metrics is key to the success of your business.
 
-I've worked in SaaS, eCommerce, fintech and even for a venterinary business. All of them have analytics needs that are similar but specific to their operations and business models. Using tools like [Looker](https://looker.com/), we can create all the reporting you need to ensure your growth and success.
+I've worked in SaaS, eCommerce, fintech and even for a veterinary business. All of them have analytics needs that are similar but specific to their operations and business models. Using tools like [Looker](https://looker.com/), we can create all the reporting you need to ensure your growth and success.
 
 <img style="float: right; margin-left: 25px; margin-bottom: 10px; width: 100px; height: 100px" src="/white-strategy.png">
 
@@ -38,7 +38,7 @@ I've worked in SaaS, eCommerce, fintech and even for a venterinary business. All
 
 Building a best-in-class analytics stack requires best-in-class analytics personnel. I provide businesses with fractional "Head of" services to help you manage and grow your team.  
 
-You may need someone to come and lead analysts on a part-time basis. You may need your team to be trained up on new tools. You may need help hiring your future analysts and leaders. I can help with all of that and more.
+You may need someone to come and lead analysts on a part-time basis. You may need your team to be trained up on new tools. You may need help hiring your future analysts and leaders. That's where I can provide support.
 
 ---
 
