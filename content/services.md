@@ -14,7 +14,7 @@ title = "Consulting Services"
 
 You need your data in one place. I help businesses set up robust, scalable data pipelines. 
 
-I can help choose and set up a data warehouse; I recommend Snowflake or BigQuery. I can also set up the ETL pipelines to get your data into your warehouse in a timely manner. Most of the time. this involves using third-party tools, but I can also help when you need something a bit more specific to your use-case.
+I can help choose and set up a data warehouse; I recommend [Snowflake](https://www.snowflake.com/) or [BigQuery](https://cloud.google.com/bigquery/). I can also set up the ETL pipelines to get your data into your warehouse in a timely manner. Most of the time. this involves using third-party tools, but I can also help when you need something a bit more specific to your use-case.
 
 <img style="float: right; margin-left: 25px; margin-bottom: 10px; width: 100px; height: 100px" src="/white-flow.png">
 
@@ -22,7 +22,7 @@ I can help choose and set up a data warehouse; I recommend Snowflake or BigQuery
 
 Modelling your data is a key step in your data stack. Transformation unlocks the true value of your data.
 
-Using tools like dbt, we'll transform the raw data from your software and tools into production-ready datasets ready for analytics. We will also make sure that everyone in-house who needs to be trained up can contribute to the data models.
+Using tools like [dbt](https://www.getdbt.com/), we'll transform the raw data from your software and tools into production-ready datasets ready for analytics. We will also make sure that everyone in-house who needs to be trained up can contribute to the data models.
 
 <img style="float: right; margin-left: 25px; margin-bottom: 10px; width: 100px; height: 100px" src="/white-chart.png">
 
@@ -30,7 +30,7 @@ Using tools like dbt, we'll transform the raw data from your software and tools 
 
 Ensuring that you're tracking the right metrics is key to the success of your business.
 
-I've worked in SaaS, eCommerce, fintech and even for a venterinary business. All of them have analytics needs that are similar but specific to their operations and business models. Using tools like Looker, we can create all the reporting you need to ensure your growth and success.
+I've worked in SaaS, eCommerce, fintech and even for a venterinary business. All of them have analytics needs that are similar but specific to their operations and business models. Using tools like [Looker](https://looker.com/), we can create all the reporting you need to ensure your growth and success.
 
 <img style="float: right; margin-left: 25px; margin-bottom: 10px; width: 100px; height: 100px" src="/white-strategy.png">
 
