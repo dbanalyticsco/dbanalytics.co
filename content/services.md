@@ -30,15 +30,15 @@ Using tools like dbt, we'll transform the raw data from your software and tools 
 
 Ensuring that you're tracking the right metrics is key to the success of your business.
 
-I've worked in SaaS, eCommerce, fintech and even for a venterinary business. All of them have analytics needs that are similar but specific to their operations and business mdoels. Using tools like Looker, we can ensure that you have all the reporting you need to ensure your growth and success.
+I've worked in SaaS, eCommerce, fintech and even for a venterinary business. All of them have analytics needs that are similar but specific to their operations and business models. Using tools like Looker, we can create all the reporting you need to ensure your growth and success.
 
 <img style="float: right; margin-left: 25px; margin-bottom: 10px; width: 100px; height: 100px" src="/white-strategy.png">
 
 ## Strategy and Training
 
-Building a best-in-class analytics stack requires best-in-class analytics personnel. I provide businesses with fractional 'Head of' services to help you manage and grow your team.  
+Building a best-in-class analytics stack requires best-in-class analytics personnel. I provide businesses with fractional "Head of" services to help you manage and grow your team.  
 
-You may need someone to come and lead analysts on a part-time basis. You may need your team to be trained up on new tools. You may need help hiring your future analysts and leaders. I can help with all of that.
+You may need someone to come and lead analysts on a part-time basis. You may need your team to be trained up on new tools. You may need help hiring your future analysts and leaders. I can help with all of that and more.
 
 ---
 
