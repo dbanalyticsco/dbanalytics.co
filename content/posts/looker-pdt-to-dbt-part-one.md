@@ -18,7 +18,7 @@ dbt is to PDTs what good sourdough with cultured butter is to white sandwich bre
 
 As Tristan Handy, founder of dbt-building Fishtown Analytics, [explains](https://blog.fishtownanalytics.com/what-exactly-is-dbt-47ba57309068):
 
-> dbt is the T in ELT (extract, load, transform). It doesn’t extract or load data, but it’s extremely good at transforming data that’s already loaded into your warehouse. Every model is exactly one SELECT query, and this query defines the resulting data set.
+> [dbt](http://getdbt.com/) is the T in ELT (extract, load, transform). It doesn’t extract or load data, but it’s extremely good at transforming data that’s already loaded into your warehouse. Every model is exactly one SELECT query, and this query defines the resulting data set.
 
 Sounds pretty similar, right? It is. dbt simply allows you to abide by certain principals that PDTs don't. dbt allows you some flexibity that PDTs don't.
 
